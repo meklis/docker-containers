@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  php-fpm:
+    container_name: php-fpm
+    build:
+      context: .
+    volumes:
+      - "/www:/www"
+      - "/var/logs:/log"

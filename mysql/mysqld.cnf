@@ -1,0 +1,13 @@
+[mysqld]
+user		= mysql
+bind-address		= 0.0.0.0
+mysqlx-bind-address	= 127.0.0.1
+key_buffer_size		= 64M
+myisam-recover-options  = BACKUP
+max_connections        = 512
+log_error = /var/log/mysql/error.log
+slow_query_log		= 1
+slow_query_log_file	= /var/log/mysql/mysql-slow.log
+long_query_time = 2
+max_binlog_size   = 100M
+sort_buffer_size = 64M
