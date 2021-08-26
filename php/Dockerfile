@@ -1,4 +1,5 @@
-FROM php:7.4-fpm
+FROM meklis/php:7.4-zts-fpm-buster
+
 MAINTAINER wildcore.tools <dev@wildcore.tools>
 
 # Install php and packages
@@ -17,15 +18,16 @@ RUN apt-get update && apt-get install -y \
 	libsnmp-dev \
 	libxml2-dev \
 	libedit-dev \
-    && pecl install mcrypt-1.0.3 \
-	&& docker-php-ext-enable mcrypt \
-    && docker-php-ext-install -j$(nproc) iconv mbstring mysqli pdo_mysql zip json curl snmp xml readline
+    libmemcached-dev  \
+    zlib1g-dev
 
-# Install php binary libraries
-RUN  pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && docker-php-ext-enable yaml
-RUN apt-get install -y libmemcached-dev zlib1g-dev \
-    && pecl install memcached \
-    && docker-php-ext-enable memcached
+RUN docker-php-ext-install -j$(nproc) iconv mbstring mysqli pdo_mysql zip json curl snmp xml
+RUN pecl install memcached \
+    && pecl install yaml \
+    && pecl install mcrypt \
+    && pecl install parallel \
+    && pecl install xdebug \
+    && docker-php-ext-enable memcached mcrypt parallel yaml xdebug
 
 #Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
