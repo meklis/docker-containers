@@ -21,13 +21,9 @@ RUN apt-get update && apt-get install -y \
     libmemcached-dev  \
     zlib1g-dev
 
-RUN docker-php-ext-install -j$(nproc) iconv mbstring mysqli pdo_mysql zip json curl snmp xml
-RUN pecl install memcached \
-    && pecl install yaml \
-    && pecl install mcrypt \
-    && pecl install parallel \
-    && pecl install xdebug \
-    && docker-php-ext-enable memcached mcrypt parallel yaml xdebug
+RUN docker-php-ext-install -j$(nproc) iconv mbstring mysqli pdo_mysql zip json curl snmp xml opcache
+RUN pecl install memcached yaml mcrypt parallel xdebug \
+    && docker-php-ext-enable memcached mcrypt parallel yaml xdebug opcache
 
 #Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
