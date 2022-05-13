@@ -1,4 +1,4 @@
-FROM meklis/php:7.4-zts-fpm-buster
+FROM php:7.4.29-fpm-bullseye
 
 MAINTAINER wildcore.tools <dev@wildcore.tools>
 
@@ -21,9 +21,9 @@ RUN apt-get update && apt-get install -y \
     libmemcached-dev  \
     zlib1g-dev
 
-RUN docker-php-ext-install -j$(nproc) iconv mbstring mysqli pdo_mysql zip json curl snmp xml opcache
-RUN pecl install memcached yaml mcrypt parallel xdebug \
-    && docker-php-ext-enable memcached mcrypt parallel yaml xdebug opcache
+RUN docker-php-ext-install -j$(nproc) iconv mbstring mysqli pdo_mysql zip json curl snmp xml opcache sockets
+RUN pecl install memcached yaml mcrypt xdebug redis \
+    && docker-php-ext-enable memcached mcrypt yaml xdebug opcache sockets redis
 
 #Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
