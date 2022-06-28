@@ -23,13 +23,14 @@ RUN apt-get update && apt-get install -y \
 	libedit-dev \
     libmemcached-dev  \
     zlib1g-dev \
-	unzip && \
+    libldap2-dev  \
+    unzip && \
     apt-get clean autoclean && \
     apt-get autoremove --yes && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 
-RUN docker-php-ext-install -j$(nproc) iconv mbstring mysqli pdo_mysql zip json curl snmp xml opcache sockets
+RUN docker-php-ext-install -j$(nproc) iconv mbstring mysqli pdo_mysql zip json curl snmp xml opcache sockets ldap
 RUN pecl install memcached yaml mcrypt xdebug redis ssh2-1.3.1 \
     && docker-php-ext-enable memcached mcrypt yaml xdebug opcache sockets redis zip ssh2
 
