@@ -1,4 +1,4 @@
-FROM php:7.4.29-fpm-bullseye
+FROM php:7.4.33-fpm-bullseye
 
 MAINTAINER wildcore.tools <dev@wildcore.tools>
 
